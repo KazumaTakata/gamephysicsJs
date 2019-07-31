@@ -38,20 +38,20 @@ if (!canvas) {
 }
 
 let center = new Vector(2)
-center.set([10, 105])
-let rec = new Rectangle(center, 20, 20, Math.PI / 5, 0.00001)
+center.set([0, 105])
+let rec = new Rectangle(center, 20, 20, (Math.PI / 5) * 0, 0.01)
 rec.calcCorner()
 
 let center2 = new Vector(2)
 center2.set([0, 0])
-let rec2 = new Rectangle(center2, 20, 20, Math.PI / 10, 0.00001)
+let rec2 = new Rectangle(center2, 30, 30, (Math.PI / 10) * 0, 110000.1)
 rec2.calcCorner()
 
 var ctx = canvas.getContext('2d')
 let myCtx = new Canvas(ctx, { x: 200, y: 500 })
 
-rec.velocity.set([0, -40])
-rec.angVelocity = Math.PI / 10
+rec.velocity.set([0, -100])
+rec.angVelocity = (Math.PI / 5) * 0
 
 rec.draw(myCtx)
 rec2.draw(myCtx)
@@ -66,7 +66,7 @@ function step(timestamp) {
   prevTime = timestamp
   let contactInfo = SAT(rec, rec2)
   if (contactInfo) {
-    calcj(rec, rec2, contactInfo, 0.3)
+    calcj(rec, rec2, contactInfo, 0.0000001)
   }
 
   console.log(contactInfo)

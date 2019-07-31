@@ -4,7 +4,7 @@ function calcj(rect1, rect2, contactInfo, coff) {
   let normal = contactInfo.normal
   if (contactInfo.point.id == 1) {
   }
-  let relVelocity = rect1.velocity.sub(rect2.velocity).dot(normal)
+
   let contactPoint
   if (contactInfo.point.id == 1) {
     contactPoint = rect1.points[contactInfo.point.index]
@@ -21,6 +21,7 @@ function calcj(rect1, rect2, contactInfo, coff) {
   }
   let ra = contactPoint.sub(rect1.center)
   let rb = contactPoint.sub(rect2.center)
+  let relVelocity = rect1.velocity.sub(rect2.velocity).dot(normal)
 
   if (ra.length == 2) {
     let tmpVec = new Vector(3)
@@ -58,8 +59,8 @@ function calcj(rect1, rect2, contactInfo, coff) {
     1 / rect1.weight + 1 / rect2.weight + normal.dot(Ra) + normal.dot(Rb)
   let j = (-(1 + coff) * relVelocity) / denomi
 
-  rect1.velocity = rect1.velocity.add(normal.scalaMul(rect1.weight / j))
-  rect2.velocity = rect2.velocity.add(normal.scalaMul(-rect2.weight / j))
+  rect1.velocity = rect1.velocity.add(normal.scalaMul(j / rect1.weight))
+  rect2.velocity = rect2.velocity.add(normal.scalaMul(-j / rect2.weight))
 
   if (normal.length == 2) {
     let tmpVec = new Vector(3)
