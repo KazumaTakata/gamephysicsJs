@@ -4,20 +4,32 @@ function calcj(rect1, rect2, contactInfo, coff) {
   let normal = contactInfo.normal
   if (contactInfo.point.id == 1) {
   }
-
+  let Wratio = rect1.weight / (rect1.weight + rect2.weight)
   let contactPoint
   if (contactInfo.point.id == 1) {
     contactPoint = rect1.points[contactInfo.point.index]
     if (normal.dot(rect2.center.sub(contactPoint)) > 0) {
       normal = normal.scalaMul(-1)
     }
-    rect1.center = rect1.center.add(normal.scalaMul(contactInfo.length))
+
+    // let Wratio = rect2.weight / (rect1.weight + rect2.weight)
+    rect1.center = rect1.center.add(
+      normal.scalaMul((1 - Wratio) * contactInfo.length)
+    )
+    rect2.center = rect2.center.add(
+      normal.scalaMul(-Wratio * contactInfo.length)
+    )
   } else {
     contactPoint = rect2.points[contactInfo.point.index]
     if (normal.dot(rect1.center.sub(contactPoint)) > 0) {
       normal = normal.scalaMul(-1)
     }
-    rect2.center = rect2.center.add(normal.scalaMul(contactInfo.length))
+    rect2.center = rect2.center.add(
+      normal.scalaMul(Wratio * contactInfo.length)
+    )
+    rect1.center = rect1.center.add(
+      normal.scalaMul(-(1 - Wratio) * contactInfo.length)
+    )
   }
   let ra = contactPoint.sub(rect1.center)
   let rb = contactPoint.sub(rect2.center)
