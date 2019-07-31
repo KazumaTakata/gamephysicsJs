@@ -12,6 +12,11 @@ function calcj(rect1, rect2, contactInfo, coff) {
       normal = normal.scalaMul(-1)
     }
 
+    let velo1 = rect1.velocity.dot(normal) * -1
+    let velo2 = rect2.velocity.dot(normal)
+
+    let Wration = velo2 / (velo1 + velo2)
+
     // let Wratio = rect2.weight / (rect1.weight + rect2.weight)
     rect1.center = rect1.center.add(
       normal.scalaMul((1 - Wratio) * contactInfo.length)
@@ -24,6 +29,11 @@ function calcj(rect1, rect2, contactInfo, coff) {
     if (normal.dot(rect1.center.sub(contactPoint)) > 0) {
       normal = normal.scalaMul(-1)
     }
+    let velo2 = rect2.velocity.dot(normal) * -1
+    let velo1 = rect1.velocity.dot(normal)
+
+    let Wration = velo2 / (velo1 + velo2)
+
     rect2.center = rect2.center.add(
       normal.scalaMul(Wratio * contactInfo.length)
     )

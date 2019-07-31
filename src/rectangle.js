@@ -9,6 +9,7 @@ class Rectangle {
     this.rotateAngle = rotateAngle
     this.points = new Array(4)
     this.velocity = new Vector(2)
+    this.acceleration = new Vector(2)
     this.velocity.zero()
     this.angVelocity = 0
     this.normal = []
@@ -21,6 +22,11 @@ class Rectangle {
     this.updaterotateAngle(dt)
     this.calcCorner()
     this.calcNormal()
+  }
+
+  updateAcc(F, dt) {
+    this.acceleration = F.scalaMul(1 / this.weight)
+    this.velocity = this.velocity.add(this.acceleration.scalaMul(dt))
   }
 
   updatePosition(dt) {
